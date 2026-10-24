@@ -1,0 +1,70 @@
+# =========================
+# Java / Gradle / Spring Boot
+# =========================
+.gradle/
+**/build/
+!**/src/**/build/
+!**/gradle/wrapper/gradle-wrapper.jar
+out/
+target/
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
+# =========================
+# Node / Angular / Frontend
+# =========================
+**/node_modules/
+**/dist/
+**/tmp/
+**/out-tsc/
+**/bazel-out/
+**/.angular/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# =========================
+# IDEs & Editors
+# =========================
+**/.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+.classpath
+.project
+.settings/
+*.swp
+*.swo
+*~
+
+# =========================
+# Environment & Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# OS Generated Files
+# =========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini

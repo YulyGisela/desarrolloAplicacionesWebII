@@ -1,0 +1,90 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: "optional:configserver:http://localhost:8888"
+  cloud:
+    gateway:
+      routes:
+        # Rutas públicas de Autenticación
+        - id: auth-service-route
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/auth/**
+
+        # Ruta pública de Actuator
+        - id: actuator-route
+          uri: ${API_GATEWAY_URL:http://localhost:8080}
+          predicates:
+            - Path=/actuator/**
+
+        # Rutas protegidas de Catálogo (Categorías, Proveedores, Productos)
+        - id: catalog-service-categorias
+          uri: ${CATALOG_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/categorias/**
+          filters:
+            - JwtAuthentication
+
+        - id: catalog-service-proveedores
+          uri: ${CATALOG_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/proveedores/**
+          filters:
+            - JwtAuthentication
+
+        - id: catalog-service-productos
+          uri: ${CATALOG_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/productos/**
+          filters:
+            - JwtAuthentication
+
+        # Rutas protegidas de Inventario (Movimientos, Dashboard, Reportes)
+        - id: inventory-service-movimientos
+          uri: ${INVENTORY_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/movimientos/**
+          filters:
+            - JwtAuthentication
+
+        - id: inventory-service-dashboard
+          uri: ${INVENTORY_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/dashboard/**
+          filters:
+            - JwtAuthentication
+
+        - id: inventory-service-reportes
+          uri: ${INVENTORY_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/reportes/**
+          filters:
+            - JwtAuthentication
+
+        # Rutas protegidas de Notificaciones y Alertas
+        - id: notification-service-alertas
+          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/alertas/**,/notificaciones/**
+          filters:
+            - JwtAuthentication
+
+app:
+  jwt:
+    secret: "bodegapro-jwt-secret-key-2026-cibertec-minimo-32-caracteres"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}

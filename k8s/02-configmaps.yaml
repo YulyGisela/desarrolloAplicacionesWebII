@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bodegapro-config
+  namespace: bodegapro
+  labels:
+    app.kubernetes.io/name: bodegapro
+    app.kubernetes.io/part-of: bodegapro-platform
+data:
+  # Base de Datos MySQL
+  MYSQL_DATABASE: "appdb"
+  MYSQL_USER: "app"
+  SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/appdb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Lima"
+  SPRING_DATASOURCE_USERNAME: "app"
+
+  # RabbitMQ Broker
+  RABBITMQ_DEFAULT_USER: "guest"
+  SPRING_RABBITMQ_HOST: "rabbitmq"
+  SPRING_RABBITMQ_PORT: "5672"
+  SPRING_RABBITMQ_USERNAME: "guest"
+
+  # Spring Cloud Config Server
+  SPRING_PROFILES_ACTIVE: "native"
+  SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+
+  # URLs de Microservicios para Gateway y Feign Client
+  AUTH_SERVICE_URL: "http://auth-service:8081"
+  CATALOG_SERVICE_URL: "http://catalog-service:8082"
+  INVENTORY_SERVICE_URL: "http://inventory-service:8083"
+  API_GATEWAY_URL: "http://api-gateway:8080"
