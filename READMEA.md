@@ -1,4 +1,4 @@
-# BodegaPro – Control de inventario para bodegas
+# BodegaPro – Control de inventario para bodegas - grupo7
 
 Proyecto grupal – **Cibertec**.
 
